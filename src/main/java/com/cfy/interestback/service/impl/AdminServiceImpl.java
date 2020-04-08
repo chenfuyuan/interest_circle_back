@@ -23,7 +23,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Admin> getList() {
-        return null;
+        return adminMapper.getList();
+    }
+
+    @Override
+    public List<Admin> getList(Integer adminId) {
+        return adminMapper.getList(adminId);
     }
 
     @Override

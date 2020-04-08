@@ -8,6 +8,8 @@ public interface CommonService<T> {
 
     List<T> getList();
 
+
+
     List<T> getDelList();
 
     AjaxMessage add(T t)throws Exception;

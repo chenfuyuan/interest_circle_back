@@ -17,4 +17,7 @@ public class Admin {
     private Integer state;
     private Date createTime;
     private Date updateTime;
+    private Integer type;
+    private String phone;
+    private String email;
 }

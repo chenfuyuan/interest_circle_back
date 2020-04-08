@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="x-admin-sm">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -41,23 +41,6 @@
                             <input class="layui-input" placeholder="开始日" name="start" id="start"></div>
                         <div class="layui-input-inline layui-show-xs-block">
                             <input class="layui-input" placeholder="截止日" name="end" id="end"></div>
-                        <!--<div class="layui-input-inline layui-show-xs-block">-->
-                        <!--<select name="contrller">-->
-                        <!--<option>支付方式</option>-->
-                        <!--<option>支付宝</option>-->
-                        <!--<option>微信</option>-->
-                        <!--<option>货到付款</option></select>-->
-                        <!--</div>-->
-                        <!--<div class="layui-input-inline layui-show-xs-block">-->
-                        <!--<select name="contrller">-->
-                        <!--<option value="">订单状态</option>-->
-                        <!--<option value="0">待确认</option>-->
-                        <!--<option value="1">已确认</option>-->
-                        <!--<option value="2">已收货</option>-->
-                        <!--<option value="3">已取消</option>-->
-                        <!--<option value="4">已完成</option>-->
-                        <!--<option value="5">已作废</option></select>-->
-                        <!--</div>-->
                         <div class="layui-input-inline layui-show-xs-block">
                             <input type="text" name="username" placeholder="请输入圈子名" autocomplete="off"
                                    class="layui-input"></div>
@@ -76,7 +59,9 @@
                     <table class="layui-table layui-form">
                         <thead>
                         <tr>
-
+                            <th>
+                                <input type="checkbox" name="" lay-skin="primary">
+                            </th>
                             <th>id</th>
                             <th>名称</th>
                             <th>创建人</th>
@@ -88,24 +73,42 @@
                             <th>帖子数</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
-                            </tr>
+                            <th>状态</th>
+                            <th>操作</th></tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>26</td>
-                            <td>篮球社团1</td>
-                            <td>chenfuyuan0713</td>
-                            <td>厦门</td>
-                            <td><img
-                                    src="http://chenfuyuan.oss-cn-shenzhen.aliyuncs.com/interest-circle/2020-03-05/15d88efbc4914bdca8562b1efc957dab.jpg"/> </td>
-                            <td><img src="http://chenfuyuan.oss-cn-shenzhen.aliyuncs.com/interest-circle/2020-03-20/8bc5e3a9bc7a4332a86306a88f6631b9.jpg" alt=""></td>
-                            <td style="overflow: hidden;"></td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2020-03-05 14:24:32</td>
+                        <tr th:each="circle:${pageInfo.list}">
+                            <td>
+                                <input type="checkbox" th:attr="value=${circle.id}" name="" lay-skin="primary"></td>
+                            <td th:text="${circle.id}">id</td>
+                            <td th:text="${circle.name}">圈子名</td>
+                            <td th:text="${circle.owner.name}">圈子创建者名</td>
+                            <td th:text="${circle.district.name}">所在城市</td>
+                            <td>
+                                <!--圈子头像-->
+                                <img th:src="@{${circle.avatarPath}}" th:attr="alt=${circle.name}"/></td>
+                            <td>
+                                <!--圈子背景-->
+                                <img th:src="@{${circle.bgdPath}}" th:attr="alt=${circle.name}">
+                            </td>
+                            <td th:text="${circle.introduce}" style="overflow: hidden;">简介</td>
+                            <td th:text="${circle.userNum}">圈子人数</td>
+                            <td th:text="${circle.articleNum}">帖子数</td>
 
-                            <td>2020-04-02 22:38:22</td>
+                            <td th:text="${#dates.format(circle.createTime,'yyyy-MM-dd HH:mm:ss')}">2020-02-12 02:37:18
+                            </td>
+                            <td th:text="${#dates.format(circle.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-04-02 12:19:59
+                            </td>
+                            <td class="td-status">
+                                <span class="layui-btn layui-btn-danger layui-btn-mini">
+                                    已删除</span>
+                            </td>
 
+                            <td class="td-manage">
+                                <a title="恢复" th:attr="onclick='member_del(this,'+${circle.id}+')'" href="javascript:;">
+                                    <i class="layui-icon">&#xe669;</i>
+                                </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

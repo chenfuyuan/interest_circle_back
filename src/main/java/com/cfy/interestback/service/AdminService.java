@@ -1,10 +1,12 @@
 package com.cfy.interestback.service;
 
 import com.cfy.interestback.model.Admin;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 public interface AdminService extends CommonService<Admin> {
 
     Admin login(Admin admin);
+    List<Admin> getList(Integer adminId);
 }

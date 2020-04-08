@@ -54,8 +54,8 @@
             </th:block>
 
             <!--最后一页-->
-            <span class="current" th:if="${number==totalPages}" th:text="${number}">最后一页</span>
-            <a th:if="${number!=totalPages}" class="num" th:href="@{${url}(pageNum=${totalPages})}"
+            <span class="current" th:if="${number==totalPages} and ${number>1}" th:text="${number}">最后一页</span>
+            <a th:if="${number==totalPages} and ${number>1}" class="num" th:href="@{${url}(pageNum=${totalPages})}"
                th:text="${totalPages}">最后一页</a>
 
             <!--下一页-->

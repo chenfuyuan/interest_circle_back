@@ -84,7 +84,7 @@
                                     <cite>用户管理</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('删除用户','/get/index/userDel')">
+                                <a onclick="xadmin.add_tab('删除用户','/get/index/userDel?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>删除用户</cite></a>
                             </li>
@@ -97,12 +97,12 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('圈子管理','/get/index/circleList')">
+                                <a onclick="xadmin.add_tab('圈子管理','/get/index/circleList?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>圈子管理</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('删除圈子','/get/index/circleDel')">
+                                <a onclick="xadmin.add_tab('删除圈子','/get/index/circleDel?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>删除圈子</cite></a>
                             </li>
@@ -113,32 +113,33 @@
                             <i class="iconfont left-nav-li" lay-tips="帖子管理">&#xe723;</i>
                             <cite>帖子管理</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
-                        <ul class="sub-menu">
+                        <ul id="article-menu" class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('帖子管理','/get/index/articleList')">
+                                <a id="article-management"
+                                   onclick="xadmin.add_tab('帖子管理','/get/index/articleList?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>帖子管理</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('删除帖子','/get/index/articleDel')">
+                                <a onclick="xadmin.add_tab('删除帖子','/get/index/articleDel?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>删除帖子</cite></a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="管理员管理">&#xe726;</i>
-                            <cite>管理员管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('管理员列表','/get/index/admin-list')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>管理员列表</cite></a>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li>-->
+                        <!--<a href="javascript:;">-->
+                            <!--<i class="iconfont left-nav-li" lay-tips="管理员管理">&#xe726;</i>-->
+                            <!--<cite>管理员管理</cite>-->
+                            <!--<i class="iconfont nav_right">&#xe697;</i></a>-->
+                        <!--<ul class="sub-menu">-->
+                            <!--<li>-->
+                                <!--<a onclick="xadmin.add_tab('管理员列表','/get/index/adminList?pageNum=1')">-->
+                                    <!--<i class="iconfont">&#xe6a7;</i>-->
+                                    <!--<cite>管理员列表</cite></a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <li>
                         <a href="javascript:;">
                             <i class="iconfont left-nav-li" lay-tips="圈子举报管理">&#xe723;</i>
@@ -146,12 +147,12 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('圈子举报管理','/error')">
+                                <a onclick="xadmin.add_tab('圈子举报管理','/get/index/circleReport?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>圈子举报管理</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('已处理举报','/error')">
+                                <a onclick="xadmin.add_tab('已处理举报','/get/index/circleReportDeal?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>已处理举报</cite></a>
                             </li>
@@ -164,12 +165,12 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('帖子举报管理','/error')">
+                                <a onclick="xadmin.add_tab('帖子举报管理','/get/index/articleReport?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>帖子举报管理</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('已处理举报','/error')">
+                                <a onclick="xadmin.add_tab('已处理举报','/get/index/articleReportDeal?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>已处理举报</cite></a>
                             </li>
@@ -182,17 +183,17 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('用户日志查看','/error')">
+                                <a onclick="xadmin.add_tab('用户日志查看','/get/index/userOperationMessage?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>用户日志查看</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('圈子日志查看','/error')">
+                                <a onclick="xadmin.add_tab('圈子日志查看','/get/index/circleOperationMessage?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>圈子日志查看</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('帖子日志查看','/error')">
+                                <a onclick="xadmin.add_tab('帖子日志查看','/get/index/articleOperationMessage?pageNum=1')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>帖子日志查看</cite></a>
                             </li>

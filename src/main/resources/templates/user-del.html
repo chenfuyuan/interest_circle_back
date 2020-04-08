@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="x-admin-sm">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -61,6 +61,7 @@
                             </th>
                             <th>ID</th>
                             <th>用户名</th>
+                            <th>头像</th>
                             <th>手机</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
@@ -68,25 +69,26 @@
                             <th>操作</th></tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="user:${pageInfo.list}">
                             <td>
-                                <input type="checkbox" name=""  lay-skin="primary">
+                                <input type="checkbox" name="" th:attr="value=${user.id}" lay-skin="primary">
                             </td>
-                            <td>17</td>
-                            <td>chenfuyuan4</td>
-                            <td>18059851014</td>
-                            <td>2020-03-22 04:17:50</td>
-                            <td>2020-03-22 04:17:50</td>
+                            <td th:text="${user.id}">4</td>
+                            <td th:text="${user.name}">chenfuyuan0713</td>
+                            <td>
+                                <img th:src="@{${user.avatarPath}}" alt="">
+                            </td>
+                            <td th:text="${user.phone}">18059851006</td>
+                            <td th:text="${#dates.format(user.createTime,'yyyy-MM-dd HH:mm:ss')}">2020-02-12 02:37:18
+                            </td>
+                            <td th:text="${#dates.format(user.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-04-02 12:19:59
+                            </td>
                             <td class="td-status">
                                 <span class="layui-btn layui-btn-danger layui-btn-mini">
-                                                  已删除
-                                              </span>
+                                    已删除</span></td>
                             <td class="td-manage">
-                                <a title="恢复" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                <a title="恢复" th:attr="onclick='member_del(this,'+${user.id}+')'" href="javascript:;">
                                     <i class="layui-icon">&#xe669;</i>
-                                </a>
-                                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                                    <i class="layui-icon">&#xe640;</i>
                                 </a>
                             </td>
                         </tr>
@@ -94,15 +96,8 @@
                     </table>
                 </div>
                 <div class="layui-card-body ">
-                    <div class="page">
-                        <div>
-                            <a class="prev" href="">&lt;&lt;</a>
-                            <span class="current">1</span>
-                            <a class="num" href="">2</a>
-                            <a class="num" href="">3</a>
-                            <a class="num" href="">4</a>
-                            <a class="next" href="">&gt;&gt;</a>
-                        </div>
+                    <div class="page"
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/userDelList')">
                     </div>
                 </div>
             </div>
@@ -127,10 +122,10 @@
 
     /*用户-删除*/
     function member_del(obj,id){
-        layer.confirm('确认要删除吗？',function(index){
+        layer.confirm('确认要恢复吗？',function(index){
             //发异步删除数据
             $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
+            layer.msg('已恢复!',{icon:1,time:1000});
         });
     }
 
@@ -139,7 +134,6 @@
     function delAll (argument) {
 
         var data = tableCheck.getData();
-
         layer.confirm('确认要恢复吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             layer.msg('恢复成功', {icon: 1});

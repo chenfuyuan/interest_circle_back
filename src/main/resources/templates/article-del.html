@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="x-admin-sm">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -79,7 +79,9 @@
                     <table class="layui-table layui-form">
                         <thead>
                         <tr>
-
+                            <th>
+                                <input type="checkbox" name="" lay-skin="primary">
+                            </th>
                             <th>id</th>
                             <th>所属圈子</th>
                             <th>作者</th>
@@ -91,36 +93,41 @@
                             <th>收藏数</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
+                            <th>操作</th></tr>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>7</td>
-                            <td>学霸圈子</td>
-                            <td>chenfuyuan0713</td>
-                            <td>学霸圈子aasd</td>
+                        <tr th:each="article:${pageInfo.list}">
+                            <td>
+                                <input type="checkbox" name="" lay-skin="primary" th:attr="value=${article.id}"></td>
+                            <td th:text="${article.id}">id</td>
+                            <td th:text="${article.circle.name}">所属圈子名</td>
+                            <td th:text="${article.user.id}">作者</td>
+                            <td th:text="${article.title}">标题</td>
                             <td><button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">
                                 <i class="layui-icon"></i>查看内容</button></td>
-                            <td>否</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>2020-02-12 02:57:28</td>
-
-                            <td>2020-03-22 22:37:02</td>
+                            <td th:if="${article.type==1}">否</td>
+                            <th th:if="${article.type==2}">是</th>
+                            <td th:text="${article.commentNum}">评论数</td>
+                            <td th:text="${article.likeNum}">点赞数</td>
+                            <td th:text="${article.starNum}">收藏数</td>
+                            <td th:text="${#dates.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}">2020-02-12 02:37:18
+                            </td>
+                            <td th:text="${#dates.format(article.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-04-02 12:19:59
+                            </td>
+                            <td class="td-manage">
+                                <!--<a title="查看" onclick="xadmin.open('编辑','order-view.html')" href="javascript:;">-->
+                                <!--<i class="layui-icon">&#xe63c;</i></a>-->
+                                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                    <i class="layui-icon">&#xe640;</i></a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="layui-card-body ">
-                    <div class="page">
-                        <div>
-                            <a class="prev" href="">&lt;&lt;</a>
-                            <span class="current">1</span>
-                            <a class="num" href="">2</a>
-                            <a class="num" href="">3</a>
-                            <a class="num" href="">4</a>
-                            <a class="next" href="">&gt;&gt;</a></div>
+                    <div class="page"
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/articleDel')">
                     </div>
                 </div>
             </div>

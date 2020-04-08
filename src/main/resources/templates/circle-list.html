@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="x-admin-sm">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -41,23 +41,6 @@
                             <input class="layui-input" placeholder="开始日" name="start" id="start"></div>
                         <div class="layui-input-inline layui-show-xs-block">
                             <input class="layui-input" placeholder="截止日" name="end" id="end"></div>
-                        <!--<div class="layui-input-inline layui-show-xs-block">-->
-                            <!--<select name="contrller">-->
-                                <!--<option>支付方式</option>-->
-                                <!--<option>支付宝</option>-->
-                                <!--<option>微信</option>-->
-                                <!--<option>货到付款</option></select>-->
-                        <!--</div>-->
-                        <!--<div class="layui-input-inline layui-show-xs-block">-->
-                            <!--<select name="contrller">-->
-                                <!--<option value="">订单状态</option>-->
-                                <!--<option value="0">待确认</option>-->
-                                <!--<option value="1">已确认</option>-->
-                                <!--<option value="2">已收货</option>-->
-                                <!--<option value="3">已取消</option>-->
-                                <!--<option value="4">已完成</option>-->
-                                <!--<option value="5">已作废</option></select>-->
-                        <!--</div>-->
                         <div class="layui-input-inline layui-show-xs-block">
                             <input type="text" name="username" placeholder="请输入圈子名" autocomplete="off"
                                    class="layui-input"></div>
@@ -90,98 +73,52 @@
                             <th>帖子数</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
+                            <th>状态</th>
                             <th>操作</th></tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="circle:${pageInfo.list}">
                             <td>
-                                <input type="checkbox" name="" lay-skin="primary"></td>
-                            <td>19</td>
-                            <td>学霸圈子</td>
-                            <td>chenfuyuan0713</td>
-                            <td>厦门</td>
-                            <td><img
-                                    src="http://chenfuyuan.oss-cn-shenzhen.aliyuncs.com/interest-circle/2020-02-12/04e800a021114eaea500b470572e6d1e.jpg"/> </td>
-                            <td><img src="/static/image/bgd.png" alt=""></td>
-                            <td style="overflow: hidden;">这是学霸圈子</td>
-                            <td>22</td>
-                            <td>6</td>
-                            <td>2020-02-12 02:57:28</td>
-
-                            <td>2020-03-22 22:37:02</td>
-                            <td class="td-manage">
-                                <!--<a title="查看" onclick="xadmin.open('编辑','order-view.html')" href="javascript:;">-->
-                                    <!--<i class="layui-icon">&#xe63c;</i></a>-->
-                                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                                    <i class="layui-icon">&#xe640;</i></a>
+                                <input type="checkbox" th:attr="value=${circle.id}" name="" lay-skin="primary"></td>
+                            <td th:text="${circle.id}">id</td>
+                            <td th:text="${circle.name}">圈子名</td>
+                            <td th:text="${circle.owner.name}">圈子创建者名</td>
+                            <td th:text="${circle.district.name}">所在城市</td>
+                            <td>
+                                <!--圈子头像-->
+                                <img th:src="@{${circle.avatarPath}}" th:attr="alt=${circle.name}"/></td>
+                            <td>
+                                <!--圈子背景-->
+                                <img th:src="@{${circle.bgdPath}}" th:attr="alt=${circle.name}">
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="" lay-skin="primary"></td>
-                            <td>20</td>
-                            <td>学霸集中营</td>
-                            <td>chenfuyuan</td>
-                            <td>福州</td>
-                            <td><img
-                                    src="http://chenfuyuan.oss-cn-shenzhen.aliyuncs.com/interest-circle/2020-02-12/5ddf0f2ac43b4e358cf7038b7f5191cc.jpg"/> </td>
-                            <td><img src="/static/image/bgd.png" alt=""></td>
-                            <td style="overflow: hidden;"></td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>2020-02-12 03:56:35</td>
+                            <td th:text="${circle.introduce}" style="overflow: hidden;">简介</td>
+                            <td th:text="${circle.userNum}">圈子人数</td>
+                            <td th:text="${circle.articleNum}">帖子数</td>
 
-                            <td>2020-03-05 01:04:23</td>
-                            <td class="td-manage">
-                                <!--<a title="查看" onclick="xadmin.open('编辑','order-view.html')" href="javascript:;">-->
-                                <!--<i class="layui-icon">&#xe63c;</i></a>-->
-                                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                                    <i class="layui-icon">&#xe640;</i></a>
+                            <td th:text="${#dates.format(circle.createTime,'yyyy-MM-dd HH:mm:ss')}">2020-02-12 02:37:18
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="" lay-skin="primary"></td>
-                            <td>21</td>
-                            <td>瑞克与莫迪</td>
-                            <td>chenfuyuan</td>
-                            <td>宁波</td>
-                            <td><img
-                                    src="http://chenfuyuan.oss-cn-shenzhen.aliyuncs.com/interest-circle/2020-02-12/326193616dec4847b9b8b82954680449.jpg"/> </td>
-                            <td><img src="/static/image/bgd.png" alt=""></td>
-                            <td style="overflow: hidden;"></td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>2020-02-12 03:57:57</td>
-
-                            <td>2020-03-25 02:19:37</td>
-                            <td class="td-manage">
-                                <!--<a title="查看" onclick="xadmin.open('编辑','order-view.html')" href="javascript:;">-->
-                                <!--<i class="layui-icon">&#xe63c;</i></a>-->
-                                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                                    <i class="layui-icon">&#xe640;</i></a>
+                            <td th:text="${#dates.format(circle.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-04-02 12:19:59
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="" lay-skin="primary"></td>
-                            <td>27</td>
-                            <td>Java俱乐部</td>
-                            <td>chenfuyuan0713</td>
-                            <td>全国</td>
-                            <td><img
-                                    src="http://chenfuyuan.oss-cn-shenzhen.aliyuncs.com/interest-circle/2020-03-25/8c9c3e3db8f941e9879a60ee58cadabd.jpg"/> </td>
-                            <td><img src="http://chenfuyuan.oss-cn-shenzhen.aliyuncs.com/interest-circle/2020-04-02/eafd54782f794438a6daf8fb8f5f0260.png" alt=""></td>
-                            <td style="overflow: hidden;">Java俱乐部，主要聚集学习JAVA语言的程序员，旨在分享Java各个方面的知识与信息。</td>
-                            <td>22</td>
-                            <td>4</td>
-                            <td>2020-03-25 01:42:41</td>
+                            <td class="td-status">
+                                <span th:if="${circle.state==1}" class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
+                                <span th:if="${circle.state==2}"
+                                      class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span>
+                            </td>
 
-                            <td>2020-04-02 23:19:27</td>
                             <td class="td-manage">
-                                <!--<a title="查看" onclick="xadmin.open('编辑','order-view.html')" href="javascript:;">-->
-                                <!--<i class="layui-icon">&#xe63c;</i></a>-->
-                                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                <a title="查看"
+                                   th:attr="onclick='articleShow(\'查看'+${circle.name}+'帖子\',\'/get/index/articleListByCid?cid='+${circle.id}+'&pageNum=1\')'"
+                                   href="javascript:;">
+                                    <i class="layui-icon">&#xe63c;</i></a>
+                                <a th:if="${circle.state==1}" th:attr="onclick='member_stop(this,'+${circle.id}+')'"
+                                   href="javascript:;" title="启用">
+                                    <i class="layui-icon">&#xe601;</i>
+                                </a>
+                                <a th:if="${circle.state==2}" th:attr="onclick='member_stop(this,'+${circle.id}+')'"
+                                   href="javascript:;" title="停用">
+                                    <i class="layui-icon">&#xe62f;</i>
+                                </a>
+                                <a title="删除" th:attr="onclick='member_del(this,'+${circle.id}+')'" href="javascript:;">
                                     <i class="layui-icon">&#xe640;</i></a>
                             </td>
                         </tr>
@@ -189,14 +126,8 @@
                     </table>
                 </div>
                 <div class="layui-card-body ">
-                    <div class="page">
-                        <div>
-                            <a class="prev" href="">&lt;&lt;</a>
-                            <span class="current">1</span>
-                            <a class="num" href="">2</a>
-                            <a class="num" href="">3</a>
-                            <a class="num" href="">4</a>
-                            <a class="next" href="">&gt;&gt;</a></div>
+                    <div class="page"
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/circleList')">
                     </div>
                 </div>
             </div>
@@ -275,6 +206,14 @@ function delAll(argument) {
             });
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
-}</script>
+}
+
+
+
+function articleShow(title,url) {
+    xadmin.add_tab(title,url);
+    window.parent.location.href = "/";
+}
+</script>
 
 </html>

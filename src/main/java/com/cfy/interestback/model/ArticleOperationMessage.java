@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -47,15 +47,23 @@ public class ArticleOperationMessage implements Serializable {
     private Integer id;
     private Long uid;
 
+    @TableField(exist = false)
+    private User user;
+
+    @TableField(exist = false)
+    private Circle circle;
     private Integer cid;
 
     private Integer aid;
+    @TableField(exist = false)
+    private Article article;
+
 
     private String message;
 
     private Integer type;
 
-    private LocalDateTime createTime;
+    private Date createTime;
 
     public ArticleOperationMessage (Long uid,Integer aid,Integer type,Integer cid) {
         this.uid = uid;
@@ -66,56 +74,59 @@ public class ArticleOperationMessage implements Serializable {
     public void setType(Integer type) {
         this.type = type;
         switch (type) {
-            case CREATE:setMessage("发布帖子");
+            case CREATE:message = "发布帖子";
                 break;
             case ESSENCE:
-                setMessage("加精帖子");
+                message = "加精帖子";
                 break;
             case STICKY:
-                setMessage("置顶帖子");
+                message = "置顶帖子";
                 break;
             case LIKE:
-                setMessage("点赞帖子");
+                message = "点赞帖子";
                 break;
             case CANCELLIKE:
-                setMessage("取消点赞帖子");
+                message = "取消点赞帖子";
                 break;
             case STAR:
-                setMessage("收藏帖子");
+                message = "收藏帖子";
                 break;
             case CANCELSTAR:
-                setMessage("取消收藏帖子");
+                message = "取消收藏帖子";
                 break;
             case COMMENT:
-                setMessage("评论帖子");
+                message = "评论帖子";
                 break;
             case CANCELSTICKY:
-                setMessage("取消置顶帖子");
+                message = "取消置顶帖子";
                 break;
             case CANCELESSENCE:
-                setMessage("取消加精帖子");
+                message = "取消加精帖子";
                 break;
             case DELETE:
-                setMessage("删除帖子");
+                message = "删除帖子";
                 break;
             case REPORT:
-                setMessage("举报帖子");
+                message = "举报帖子";
                 break;
             case DEALREPORT:
-                setMessage("处理举报帖子");
+                message = "处理举报帖子";
                 break;
             case ACOMMENT:
-                setMessage("评论帖子");
+                message = "评论帖子";
                 break;
             case REPLY:
-                setMessage("回复评论");
+                message = "回复评论";
                 break;
             case DELETECOMMENT:
-                setMessage("删除评论");
+                message = "删除评论";
                 break;
             case DELETEREPLY:
-                setMessage("删除回复");
+                message = "删除回复";
                 break;
         }
     }
+
+
+
 }

@@ -26,7 +26,7 @@ public class UserController {
     private Integer pageSize;
 
     @GetMapping("/get/index/userList")
-    public String userList(@RequestParam("pageNum")Integer pageNum, Model model) {
+    public String getList(@RequestParam("pageNum")Integer pageNum, Model model) {
         //启动分页
         PageHelper.startPage(pageNum, pageSize);
     try {
@@ -96,8 +96,7 @@ public class UserController {
     }
 
     @GetMapping("/get/index/userDel")
-    public String userDelIndex(@RequestParam("pageNum") Integer pageNum, Model model) {
-
+    public String getDelList(@RequestParam("pageNum") Integer pageNum, Model model) {
         //启动分页
         PageHelper.startPage(pageNum, pageSize);
         try {
@@ -113,7 +112,6 @@ public class UserController {
         }finally {
             PageHelper.clearPage();
         }
-
         return "user-del";
     }
 }
