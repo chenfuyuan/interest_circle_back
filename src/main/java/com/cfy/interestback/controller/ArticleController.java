@@ -2,6 +2,7 @@ package com.cfy.interestback.controller;
 
 import com.cfy.interestback.model.Article;
 import com.cfy.interestback.service.ArticleService;
+import com.cfy.interestback.vo.SearchVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +27,12 @@ public class ArticleController {
     private Integer pageSize;
 
     @GetMapping("/get/index/articleList")
-    public String getList(@RequestParam("pageNum")Integer pageNum, Model model) {
+    public String getList(SearchVo searchVo, Model model) {
         //启动分页
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(searchVo.getPageNum(), pageSize);
         try {
             //查询数据
-            List<Article> list = service.getList();
+            List<Article> list = service.getList(searchVo);
             log.info("list = " +list);
             //封装分页
             PageInfo<Article> pageInfo = new PageInfo<Article>(list, pageSize);
@@ -66,12 +67,12 @@ public class ArticleController {
     }
 
     @GetMapping("/get/index/articleDel")
-    public String getDelList(@RequestParam("pageNum") Integer pageNum, Model model) {
+    public String getDelList(SearchVo searchVo, Model model) {
         //启动分页
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(searchVo.getPageNum(), pageSize);
         try {
             //查询数据
-            List<Article> list = service.getDelList();
+            List<Article> list = service.getDelList(searchVo);
             log.info("list = " +list);
             //封装分页
             PageInfo<Article> pageInfo = new PageInfo<>(list, pageSize);

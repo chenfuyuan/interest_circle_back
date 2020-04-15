@@ -3,6 +3,7 @@ package com.cfy.interestback.service.impl;
 import com.cfy.interestback.model.ArticleReport;
 import com.cfy.interestback.service.ArticleReportService;
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,12 +11,12 @@ import java.util.List;
 @Service
 public class ArticleReportServiceImpl implements ArticleReportService {
     @Override
-    public List<ArticleReport> getList() {
+    public List<ArticleReport> getList(SearchVo searchVo) {
         return null;
     }
 
     @Override
-    public List<ArticleReport> getDelList() {
+    public List<ArticleReport> getDelList(SearchVo searchVo) {
         return null;
     }
 

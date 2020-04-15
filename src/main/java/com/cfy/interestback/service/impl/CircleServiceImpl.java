@@ -4,6 +4,7 @@ import com.cfy.interestback.mapper.CircleMapper;
 import com.cfy.interestback.model.Circle;
 import com.cfy.interestback.service.CircleService;
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,12 @@ public class CircleServiceImpl implements CircleService {
 
 
     @Override
-    public List<Circle> getList() {
+    public List<Circle> getList(SearchVo searchVo) {
         return mapper.getList();
     }
 
     @Override
-    public List<Circle> getDelList() {
+    public List<Circle> getDelList(SearchVo searchVo) {
         return mapper.getDelList();
     }
 

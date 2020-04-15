@@ -34,14 +34,18 @@
             <div class="layui-card">
                 <div class="layui-card-body ">
                     <div class="layui-form layui-col-space5">
-                        <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="search" placeholder="请输入用户名" autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                        <div class="layui-inline layui-show-xs-block">
-                            <button id="btn-search" data-table="userList"
-                                    class="layui-btn" lay-submit="" lay-filter="sreach"><i
-                                    class="layui-icon">&#xe615;</i></button>
+                        <div class="layui-input-inline layui-show-xs-block">
+                            <input th:value="${start}" class="layui-input" placeholder="开始日" name="start" id="start"
+                                   autocomplete="off"></div>
+                        <div class="layui-input-inline layui-show-xs-block">
+                            <input th:value="${end}" class="layui-input" placeholder="截止日" name="end" id="end"
+                                   autocomplete="off"></div>
+                        <div class="layui-input-inline layui-show-xs-block">
+                            <input th:value="${search}" type="text" name="search" placeholder="请输入用户名或id" autocomplete="off" class="layui-input" id="input-search"></div>
+                        <div class="layui-input-inline layui-show-xs-block">
+                            <button data-table="userList" id="btn-search" class="layui-btn" lay-submit=""
+                                    lay-filter="sreach">
+                                <i class="layui-icon">&#xe615;</i></button>
                         </div>
                     </div>
                 </div>
@@ -100,9 +104,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="layui-card-body ">
+                <div class="layui-card-body" th:if="${paramUrl}==null">
                     <div class="page"
                          th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/userList')">
+                    </div>
+                </div>
+                <div class="layui-card-body" th:unless="${paramUrl}==null"
+                     th:with="url='/get/index/userList?'+${paramUrl}">
+                    <div class="page"
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},${url})">
                     </div>
                 </div>
             </div>
@@ -224,4 +234,7 @@
         });
     }
 </script>
+
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/search.js"></script>
 </html>

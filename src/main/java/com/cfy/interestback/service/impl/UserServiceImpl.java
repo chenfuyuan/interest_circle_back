@@ -4,6 +4,7 @@ import com.cfy.interestback.mapper.UserMapper;
 import com.cfy.interestback.model.User;
 import com.cfy.interestback.service.UserService;
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +17,13 @@ public class UserServiceImpl implements UserService {
     private UserMapper mapper;
 
     @Override
-    public List<User> getList() {
-        return mapper.getList();
+    public List<User> getList(SearchVo searchVo) {
+        return mapper.getList(searchVo);
     }
 
     @Override
-    public List<User> getDelList() {
-        return mapper.getDelList();
+    public List<User> getDelList(SearchVo searchVo) {
+        return mapper.getDelList(searchVo);
     }
 
     @Transactional(rollbackFor = Exception.class)

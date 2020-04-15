@@ -1,16 +1,17 @@
 package com.cfy.interestback.service;
 
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 
 import java.util.List;
 
 public interface CommonService<T> {
 
-    List<T> getList();
+    List<T> getList(SearchVo searchVo);
 
 
 
-    List<T> getDelList();
+    List<T> getDelList(SearchVo searchVo);
 
     AjaxMessage add(T t)throws Exception;
 

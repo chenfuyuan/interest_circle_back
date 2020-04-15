@@ -3,6 +3,7 @@ package com.cfy.interestback.controller;
 import com.cfy.interestback.model.Admin;
 import com.cfy.interestback.service.AdminService;
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -50,14 +51,14 @@ public class AdminController {
     }
 
     @GetMapping("/get/index/adminList")
-    public String getList(@RequestParam("pageNum")Integer pageNum, Model model,HttpServletRequest request) {
+    public String getList(SearchVo searchVo, Model model, HttpServletRequest request) {
         Admin admin = (Admin) request.getSession().getAttribute("admin");
         Integer adminId = admin.getId();
         //启动分页
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(searchVo.getPageNum(), pageSize);
         try {
             //查询数据
-            List<Admin> list = service.getList(adminId);
+            List<Admin> list = service.getList(adminId,searchVo);
             log.info("list = " +list);
             //封装分页
             PageInfo<Admin> pageInfo = new PageInfo<>(list, pageSize);

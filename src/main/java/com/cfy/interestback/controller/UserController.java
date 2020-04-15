@@ -3,6 +3,7 @@ package com.cfy.interestback.controller;
 import com.cfy.interestback.model.User;
 import com.cfy.interestback.service.UserService;
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -26,23 +27,62 @@ public class UserController {
     private Integer pageSize;
 
     @GetMapping("/get/index/userList")
-    public String getList(@RequestParam("pageNum")Integer pageNum, Model model) {
+    public String getList(SearchVo searchVo, Model model) {
+        log.info("searchVo = " + searchVo);
         //启动分页
-        PageHelper.startPage(pageNum, pageSize);
-    try {
-        //查询数据
-        List<User> list = service.getList();
-        log.info("list = " +list);
-        //封装分页
-        PageInfo<User> pageInfo = new PageInfo<>(list, pageSize);
+        PageHelper.startPage(searchVo.getPageNum(), pageSize);
+        try {
+            //查询数据
+            List<User> list = service.getList(searchVo);
+            log.info("list = " + list);
+            //封装分页
+            PageInfo<User> pageInfo = new PageInfo<>(list, pageSize);
 
-        model.addAttribute("pageInfo", pageInfo);
+            model.addAttribute("pageInfo", pageInfo);
 
-        log.info("pageSize = " + pageSize);
-    }finally {
-        PageHelper.clearPage();
-    }
-    return "user-list";
+            log.info("pageSize = " + pageSize);
+
+
+            String start = searchVo.getStart();
+            String end = searchVo.getEnd();
+            String search = searchVo.getSearch();
+
+            String paramsUrl = "&";
+            Integer paramsNum = 0;
+            if (start != null && !start.equals("")) {
+
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "start=" + start;
+                model.addAttribute("start", start);
+                paramsNum++;
+            }
+
+            if (end != null && !end.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "end="+end;
+                model.addAttribute("end", end);
+                paramsNum++;
+            }
+            if (search != null && !search.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "search="+search;
+                paramsNum++;
+                model.addAttribute("search", search);
+            }
+
+            if (paramsNum != 0) {
+                model.addAttribute("paramUrl", paramsUrl);
+            }
+        } finally {
+            PageHelper.clearPage();
+        }
+        return "user-list";
     }
 
     @PostMapping("/user/delete/more")
@@ -96,12 +136,12 @@ public class UserController {
     }
 
     @GetMapping("/get/index/userDel")
-    public String getDelList(@RequestParam("pageNum") Integer pageNum, Model model) {
+    public String getDelList(SearchVo searchVo, Model model) {
         //启动分页
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(searchVo.getPageNum(), pageSize);
         try {
             //查询数据
-            List<User> list = service.getDelList();
+            List<User> list = service.getDelList(searchVo);
             log.info("list = " +list);
             //封装分页
             PageInfo<User> pageInfo = new PageInfo<>(list, pageSize);
@@ -109,6 +149,43 @@ public class UserController {
             model.addAttribute("pageInfo", pageInfo);
 
             log.info("pageSize = " + pageSize);
+
+            String start = searchVo.getStart();
+            String end = searchVo.getEnd();
+            String search = searchVo.getSearch();
+
+            String paramsUrl = "&";
+            Integer paramsNum = 0;
+            if (start != null && !start.equals("")) {
+
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "start=" + start;
+                model.addAttribute("start", start);
+                paramsNum++;
+            }
+
+            if (end != null && !end.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "end="+end;
+                model.addAttribute("end", end);
+                paramsNum++;
+            }
+            if (search != null && !search.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "search="+search;
+                paramsNum++;
+                model.addAttribute("search", search);
+            }
+
+            if (paramsNum != 0) {
+                model.addAttribute("paramUrl", paramsUrl);
+            }
         }finally {
             PageHelper.clearPage();
         }

@@ -5,6 +5,7 @@ import com.cfy.interestback.model.Admin;
 import com.cfy.interestback.service.AdminService;
 import com.cfy.interestback.utils.MD5Utils;
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +23,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Admin> getList() {
+    public List<Admin> getList(SearchVo searchVo) {
         return adminMapper.getList();
     }
 
     @Override
-    public List<Admin> getList(Integer adminId) {
+    public List<Admin> getList(Integer adminId,SearchVo searchVo) {
         return adminMapper.getList(adminId);
     }
 
     @Override
-    public List<Admin> getDelList() {
+    public List<Admin> getDelList(SearchVo searchVo) {
         return null;
     }
 

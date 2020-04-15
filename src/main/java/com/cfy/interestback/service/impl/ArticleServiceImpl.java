@@ -4,6 +4,7 @@ import com.cfy.interestback.mapper.ArticleMapper;
 import com.cfy.interestback.model.Article;
 import com.cfy.interestback.service.ArticleService;
 import com.cfy.interestback.vo.AjaxMessage;
+import com.cfy.interestback.vo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getDelList() {
+    public List<Article> getDelList(SearchVo searchVo) {
         return mapper.getDelList();
     }
 
@@ -34,7 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getList() {
+    public List<Article> getList(SearchVo searchVo) {
         return mapper.getList();
     }
 
