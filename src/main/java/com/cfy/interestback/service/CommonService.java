@@ -23,5 +23,5 @@ public interface CommonService<T> {
 
     AjaxMessage delete(Integer id) throws Exception;
 
-    Integer deleteMore(Integer[] deleteList);
+    Integer deleteMore(Integer[] deleteList) throws Exception;
 }

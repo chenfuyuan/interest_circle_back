@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2 class="title" th:text="${article.title}">标题</h2>
+    <div class="content" th:utext="${article.content}">内容</div>
+</body>
+</html>

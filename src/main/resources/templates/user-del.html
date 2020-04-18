@@ -67,7 +67,8 @@
                             <th>创建时间</th>
                             <th>更新时间</th>
                             <th>状态</th>
-                            <th>操作</th></tr>
+                            <!--<th>操作</th>-->
+                        </tr>
                         </thead>
                         <tbody>
                         <tr th:each="user:${pageInfo.list}">
@@ -87,11 +88,11 @@
                             <td class="td-status">
                                 <span class="layui-btn layui-btn-danger layui-btn-mini">
                                     已删除</span></td>
-                            <td class="td-manage">
-                                <a title="恢复" th:attr="onclick='member_del(this,'+${user.id}+')'" href="javascript:;">
-                                    <i class="layui-icon">&#xe669;</i>
-                                </a>
-                            </td>
+                            <!--<td class="td-manage">-->
+                                <!--<a title="恢复" th:attr="onclick='member_del(this,'+${user.id}+')'" href="javascript:;">-->
+                                    <!--<i class="layui-icon">&#xe669;</i>-->
+                                <!--</a>-->
+                            <!--</td>-->
                         </tr>
                         </tbody>
                     </table>

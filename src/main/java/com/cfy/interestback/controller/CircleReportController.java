@@ -25,7 +25,7 @@ public class CircleReportController {
     @Value("${com.cfy.interest.pageSize}")
     private Integer pageSize;
 
-    @GetMapping("/get/index/circleReport")
+    @GetMapping("/get/index/circleReportList")
     public String getList(SearchVo searchVo, Model model) {
         //启动分页
         PageHelper.startPage(searchVo.getPageNum(), pageSize);
@@ -39,13 +39,50 @@ public class CircleReportController {
             model.addAttribute("pageInfo", pageInfo);
 
             log.info("pageSize = " + pageSize);
+
+            String start = searchVo.getStart();
+            String end = searchVo.getEnd();
+            String search = searchVo.getSearch();
+
+            String paramsUrl = "&";
+            Integer paramsNum = 0;
+            if (start != null && !start.equals("")) {
+
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "start=" + start;
+                model.addAttribute("start", start);
+                paramsNum++;
+            }
+
+            if (end != null && !end.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "end="+end;
+                model.addAttribute("end", end);
+                paramsNum++;
+            }
+            if (search != null && !search.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "search="+search;
+                paramsNum++;
+                model.addAttribute("search", search);
+            }
+
+            if (paramsNum != 0) {
+                model.addAttribute("paramUrl", paramsUrl);
+            }
         }finally {
             PageHelper.clearPage();
         }
-        return "circleReport-list";
+        return "circle-report-list";
     }
 
-    @GetMapping("/get/index/circlReportDeal")
+    @GetMapping("/get/index/circleReportDeal")
     public String getDelList(SearchVo searchVo, Model model) {
         //启动分页
         PageHelper.startPage(searchVo.getPageNum(), pageSize);
@@ -59,9 +96,46 @@ public class CircleReportController {
             model.addAttribute("pageInfo", pageInfo);
 
             log.info("pageSize = " + pageSize);
+
+            String start = searchVo.getStart();
+            String end = searchVo.getEnd();
+            String search = searchVo.getSearch();
+
+            String paramsUrl = "&";
+            Integer paramsNum = 0;
+            if (start != null && !start.equals("")) {
+
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "start=" + start;
+                model.addAttribute("start", start);
+                paramsNum++;
+            }
+
+            if (end != null && !end.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "end="+end;
+                model.addAttribute("end", end);
+                paramsNum++;
+            }
+            if (search != null && !search.equals("")) {
+                if (paramsNum != 0) {
+                    paramsUrl += "&";
+                }
+                paramsUrl += "search="+search;
+                paramsNum++;
+                model.addAttribute("search", search);
+            }
+
+            if (paramsNum != 0) {
+                model.addAttribute("paramUrl", paramsUrl);
+            }
         }finally {
             PageHelper.clearPage();
         }
-        return "circleReport-deal";
+        return "circle-report-deal";
     }
 }

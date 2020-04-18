@@ -46,74 +46,49 @@
                         <div class="layui-input-inline layui-show-xs-block">
                             <input th:value="${search}" type="text" name="search" placeholder="请输入用户名或id" autocomplete="off" class="layui-input" id="input-search"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <button data-table="articleDel" id="btn-search" class="layui-btn" lay-submit=""
+                            <button data-table="circleReportList" id="btn-search" class="layui-btn" lay-submit=""
                                     lay-filter="sreach">
                                 <i class="layui-icon">&#xe615;</i></button>
                         </div>
                     </div>
                 </div>
-                <!--<div class="layui-card-header">-->
-                <!--<button class="layui-btn layui-btn-danger" onclick="delAll()">-->
-                <!--<i class="layui-icon"></i>批量删除</button>-->
-                <!--<button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">-->
-                <!--<i class="layui-icon"></i>添加</button></div>-->
+
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
                         <thead>
                         <tr>
-                            <th>
-                                <input type="checkbox" name="" lay-skin="primary">
-                            </th>
+
                             <th>id</th>
-                            <th>所属圈子</th>
-                            <th>作者</th>
-                            <th>帖子标题</th>
-                            <th>帖子内容</th>
-                            <th>精华帖</th>
-                            <th>评论数</th>
-                            <th>点赞数</th>
-                            <th>收藏数</th>
-                            <th>创建时间</th>
-                            <th>更新时间</th>
-                            <!--<th>操作</th>-->
+                            <th>举报人</th>
+                            <th>举报圈子</th>
+                            <th>举报理由</th>
+                            <th>举报时间</th>
+                            <th>处理时间</th>
+                            <th>举报结果</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="article:${pageInfo.list}">
-                            <td>
-                                <input type="checkbox" name="" lay-skin="primary" th:attr="value=${article.id}"></td>
-                            <td th:text="${article.id}">id</td>
-                            <td th:text="${article.circle.name}">所属圈子名</td>
-                            <td th:text="${article.user.name}">作者</td>
-                            <td th:text="${article.title}">标题</td>
-                            <td><button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">
-                                <i class="layui-icon"></i>查看内容</button></td>
-                            <td th:if="${article.type==1}">否</td>
-                            <th th:if="${article.type==2}">是</th>
-                            <td th:text="${article.commentNum}">评论数</td>
-                            <td th:text="${article.likeNum}">点赞数</td>
-                            <td th:text="${article.starNum}">收藏数</td>
-                            <td th:text="${#dates.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}">2020-02-12 02:37:18
-                            </td>
-                            <td th:text="${#dates.format(article.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-04-02 12:19:59
-                            </td>
-                            <!--<td class="td-manage">-->
-                                <!--&lt;!&ndash;<a title="查看" onclick="xadmin.open('编辑','order-view.html')" href="javascript:;">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<i class="layui-icon">&#xe63c;</i></a>&ndash;&gt;-->
-                                <!--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">-->
-                                    <!--<i class="layui-icon">&#xe640;</i></a>-->
-                            <!--</td>-->
+                        <tr th:each="report:${pageInfo.list}">
+                            <td th:text="${report.id}">id</td>
+                            <td th:text="${report.user.name}">圈子名</td>
+                            <td th:text="${report.circle.name}">圈子创建者名</td>
+                            <td th:text="${report.reportMessage}">举报理由</td>
+
+                            <td th:text="${#dates.format(report.createTime,'yyyy-MM-dd HH:mm:ss')}">举报时间</td>
+                            <td th:text="${#dates.format(report.dealTime,'yyyy-MM-dd HH:mm:ss')}">处理时间</td>
+                            <td th:if="${report.state==2}">举报成功</td>
+                            <td th:if="${report.state==3}">举报失败</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="layui-card-body" th:if="${paramUrl}==null">
                     <div class="page"
-                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/articleDel')">
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/circleReportList')">
                     </div>
                 </div>
                 <div class="layui-card-body" th:unless="${paramUrl}==null"
-                     th:with="url='/get/index/articleDel?'+${paramUrl}">
+                     th:with="url='/get/index/circleReportList?'+${paramUrl}">
                     <div class="page"
                          th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},${url})">
                     </div>
@@ -126,6 +101,18 @@
 <script>layui.use(['laydate', 'form'],
     function() {
         var laydate = layui.laydate;
+        var form = layui.form;
+        // 监听全选
+        form.on('checkbox(checkall)', function (data) {
+
+            if (data.elem.checked) {
+                $('tbody input').prop('checked', true);
+            } else {
+                $('tbody input').prop('checked', false);
+            }
+            form.render('checkbox');
+        });
+
 
         //执行一个laydate实例
         laydate.render({
@@ -183,18 +170,44 @@ function member_del(obj, id) {
 }
 
 function delAll(argument) {
+    var ids = [];
 
-    var data = tableCheck.getData();
+    // 获取选中的id
+    $('tbody input').each(function (index, el) {
+        if ($(this).prop('checked')) {
+            ids.push($(this).val())
+        }
+    });
 
-    layer.confirm('确认要删除吗？' + data,
-        function(index) {
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {
-                icon: 1
-            });
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+    layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+        //捉到所有被选中的，发异步进行删除
+        console.log("ids = " + ids);
+
+        if (ids.length == 0) {
+            layer.msg("未选择选出项");
+        }
+
+        $.post("/circle/delete/more", {ids: ids}, function (result) {
+            if (result.success) {
+                layer.msg('删除成功', {icon: 1});
+                $(".layui-form-checked").not('.header').parents('tr').remove();
+            } else {
+                layer.msg("删除失败", {icon: 1});
+            }
         });
-}</script>
+
+    });
+}
+
+
+
+function articleShow(title,url) {
+    xadmin.add_tab(title,url);
+    window.parent.location.href = "/";
+}
+</script>
+
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/search.js"></script>
+
 </html>

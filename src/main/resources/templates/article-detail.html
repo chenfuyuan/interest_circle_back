@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>帖子详情</title>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-theme.min.css">
+
+    <script type="application/javascript" src="/static/js/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/articleDetail.css"/>
+    <link rel="stylesheet" href="/static/css/circleModel.css"/>
+    <link rel="stylesheet" href="/static/css/cssinit.css"/>
+    <link rel="stylesheet" href="/static/css/model.css">
+
+</head>
+
+<body>
+<section>
+    <div class="circle-content">
+        <div class="circle-home w-e-clear-fix">
+            <div th:replace="include/circle_model::left-content"></div>
+            <div class="main-content" th:attr="data-aid=${article.id}">
+                <div class="content-block">
+                    <div class="circle-post-container theme-color-container">
+                        <div class="circle-post-box">
+                            <header class="page-header clear-fix">
+                                <div class="left">
+                                    <div class="user-avatar">
+                                        <img th:src="@{${article.user.avatarPath}}" alt="" class="avatar-head">
+                                    </div>
+                                    <div>
+                                        <div class="user-name text-over" th:text="${article.user.name}">发帖人</div>
+                                        <div class="post-time" id="post-time"
+                                             th:text="${#dates.format(article.createTime,'yyyy-MM-dd:HH:mm:ss')}">
+                                            发帖日期
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="right-side">
+                                        <span class="more-dropdown-box more-dropdown">
+                                            <div class="user-img">
+                                                <div class="article-operation-menu-btn">
+                                                    <i class="more-icon-option option-icon icon-btn glyphicon glyphicon-list"></i>
+                                                </div>
+                                                <div class='more-dropdown-menu topic-cell-dropdown-menu article-dropdown-menu'
+                                                     style='display: none'>
+                                                    <div class='more-dropdown-item-list' th:attr="data-aid=${article.id}">
+                                                        <div class='more-dropdown-item item-delete'>
+                                                            <div class='handle-icon-wrapper'>
+                                                                <img src='/static/image/articleDelete.svg'
+                                                                 class='handle-icon'>
+                                                            </div>
+                                                            <span>删除</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </span>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="page-content">
+                                <div class="topic-content">
+                                    <div>
+                                        <div class="topic-body topic-body-hashtml">
+                                            <h3 th:text="${article.title}">帖子标题</h3>
+                                            <div th:utext="${article.content}"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="reactions">
+                                            <span class="likes">
+                                                <img src="/static/image/like.png"
+                                                     class="more-icon-appreciation icon-btn">
+                                                <span class="">
+                                                    赞
+                                                    <span class="likes-num" th:text="${article.likeNum}"></span>
+                                                </span>
+                                            </span>
+                                            <span class="comments"><i
+                                                    class="more-icon-comment icon-btn glyphicon glyphicon-comment"></i>
+                                                <span class="comments-count">
+                                                    评论
+                                                    <span class="comments-num" th:text="${article.commentNum}"></span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--评论信息-->
+                                <div>
+                                    <div class="reply-box reply"><!---->
+                                        <div class="post-flow-container more-scroll-view">
+                                            <div class="reply-detail-wrapper">
+                                                <div class="reply-item parent-reply-item">
+                                                    <div class="user-avatar">
+                                                        <img src="/static/image/avatar.png"
+                                                             alt="" class="avatar-head">
+                                                    </div>
+                                                    <div class="reply-details">
+                                                        <div class="reply-header">
+                                                            <div><span class="user-name">YY</span> <span
+                                                                    class="topic-time">2月14日 23:14</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="reply-body">wfasfsafasfsafasfaf</div>
+                                                        <div class="reply-footer">
+                                                            <span class="text-btn">删除</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div id="end" class="more-scroll-view-status"><span> · 已加载结束 · </span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--&lt;!&ndash;帖子删除弹窗&ndash;&gt;-->
+<div th:replace="include/article_model::delete"></div>
+<script type="text/javascript" src="/static/js/articleDetail.js"></script>
+<div th:replace="include/footer::footer"></div>
+</body>
+</html>

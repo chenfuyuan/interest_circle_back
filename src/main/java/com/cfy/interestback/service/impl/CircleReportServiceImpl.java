@@ -17,12 +17,12 @@ public class CircleReportServiceImpl implements CircleReportService {
 
     @Override
     public List<CircleReport> getList(SearchVo searchVo) {
-        return circleReportMapper.getList();
+        return circleReportMapper.getList(searchVo);
     }
 
     @Override
     public List<CircleReport> getDelList(SearchVo searchVo) {
-        return circleReportMapper.getDelList();
+        return circleReportMapper.getDelList(searchVo);
     }
 
     @Override

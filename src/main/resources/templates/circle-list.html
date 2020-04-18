@@ -36,31 +36,35 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-col-space5">
+                    <div class="layui-form layui-col-space5">
                         <div class="layui-input-inline layui-show-xs-block">
-                            <input class="layui-input" placeholder="开始日" name="start" id="start"></div>
+                            <input th:value="${start}" class="layui-input" placeholder="开始日" name="start" id="start"
+                                   autocomplete="off"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <input class="layui-input" placeholder="截止日" name="end" id="end"></div>
+                            <input th:value="${end}" class="layui-input" placeholder="截止日" name="end" id="end"
+                                   autocomplete="off"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <input type="text" name="username" placeholder="请输入圈子名" autocomplete="off"
-                                   class="layui-input"></div>
+                            <input th:value="${search}" type="text" name="search" placeholder="请输入用户名或id" autocomplete="off" class="layui-input" id="input-search"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                            <button data-table="circleList" id="btn-search" class="layui-btn" lay-submit=""
+                                    lay-filter="sreach">
                                 <i class="layui-icon">&#xe615;</i></button>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="layui-card-header">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()">
                         <i class="layui-icon"></i>批量删除</button>
-                    <button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">
-                        <i class="layui-icon"></i>添加</button></div>
+                    <!--<button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">-->
+                        <!--<i class="layui-icon"></i>添加-->
+                    <!--</button>-->
+                </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
                         <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" name="" lay-skin="primary">
+                                <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
                             </th>
                             <th>id</th>
                             <th>名称</th>
@@ -73,8 +77,9 @@
                             <th>帖子数</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
-                            <th>状态</th>
-                            <th>操作</th></tr>
+                            <!--<th>状态</th>-->
+                            <th>操作</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <tr th:each="circle:${pageInfo.list}">
@@ -83,7 +88,8 @@
                             <td th:text="${circle.id}">id</td>
                             <td th:text="${circle.name}">圈子名</td>
                             <td th:text="${circle.owner.name}">圈子创建者名</td>
-                            <td th:text="${circle.district.name}">所在城市</td>
+                            <td th:if="${circle.districtId!=0}" th:text="${circle.district.name}">所在城市</td>
+                            <td th:if="${circle.districtId==0}">全国</td>
                             <td>
                                 <!--圈子头像-->
                                 <img th:src="@{${circle.avatarPath}}" th:attr="alt=${circle.name}"/></td>
@@ -99,25 +105,25 @@
                             </td>
                             <td th:text="${#dates.format(circle.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-04-02 12:19:59
                             </td>
-                            <td class="td-status">
-                                <span th:if="${circle.state==1}" class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
-                                <span th:if="${circle.state==2}"
-                                      class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span>
-                            </td>
+                            <!--<td class="td-status">-->
+                                <!--<span th:if="${circle.state==1}" class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>-->
+                                <!--<span th:if="${circle.state==2}"-->
+                                      <!--class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span>-->
+                            <!--</td>-->
 
                             <td class="td-manage">
                                 <a title="查看"
                                    th:attr="onclick='articleShow(\'查看'+${circle.name}+'帖子\',\'/get/index/articleListByCid?cid='+${circle.id}+'&pageNum=1\')'"
                                    href="javascript:;">
                                     <i class="layui-icon">&#xe63c;</i></a>
-                                <a th:if="${circle.state==1}" th:attr="onclick='member_stop(this,'+${circle.id}+')'"
-                                   href="javascript:;" title="启用">
-                                    <i class="layui-icon">&#xe601;</i>
-                                </a>
-                                <a th:if="${circle.state==2}" th:attr="onclick='member_stop(this,'+${circle.id}+')'"
-                                   href="javascript:;" title="停用">
-                                    <i class="layui-icon">&#xe62f;</i>
-                                </a>
+                                <!--<a th:if="${circle.state==1}" th:attr="onclick='member_stop(this,'+${circle.id}+')'"-->
+                                   <!--href="javascript:;" title="启用">-->
+                                    <!--<i class="layui-icon">&#xe601;</i>-->
+                                <!--</a>-->
+                                <!--<a th:if="${circle.state==2}" th:attr="onclick='member_stop(this,'+${circle.id}+')'"-->
+                                   <!--href="javascript:;" title="停用">-->
+                                    <!--<i class="layui-icon">&#xe62f;</i>-->
+                                <!--</a>-->
                                 <a title="删除" th:attr="onclick='member_del(this,'+${circle.id}+')'" href="javascript:;">
                                     <i class="layui-icon">&#xe640;</i></a>
                             </td>
@@ -125,9 +131,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="layui-card-body ">
+                <div class="layui-card-body" th:if="${paramUrl}==null">
                     <div class="page"
                          th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/circleList')">
+                    </div>
+                </div>
+                <div class="layui-card-body" th:unless="${paramUrl}==null"
+                     th:with="url='/get/index/circleList?'+${paramUrl}">
+                    <div class="page"
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},${url})">
                     </div>
                 </div>
             </div>
@@ -138,6 +150,18 @@
 <script>layui.use(['laydate', 'form'],
     function() {
         var laydate = layui.laydate;
+        var form = layui.form;
+        // 监听全选
+        form.on('checkbox(checkall)', function (data) {
+
+            if (data.elem.checked) {
+                $('tbody input').prop('checked', true);
+            } else {
+                $('tbody input').prop('checked', false);
+            }
+            form.render('checkbox');
+        });
+
 
         //执行一个laydate实例
         laydate.render({
@@ -195,17 +219,33 @@ function member_del(obj, id) {
 }
 
 function delAll(argument) {
+    var ids = [];
 
-    var data = tableCheck.getData();
+    // 获取选中的id
+    $('tbody input').each(function (index, el) {
+        if ($(this).prop('checked')) {
+            ids.push($(this).val())
+        }
+    });
 
-    layer.confirm('确认要删除吗？' + data,
-        function(index) {
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {
-                icon: 1
-            });
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+    layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+        //捉到所有被选中的，发异步进行删除
+        console.log("ids = " + ids);
+
+        if (ids.length == 0) {
+            layer.msg("未选择选出项");
+        }
+
+        $.post("/circle/delete/more", {ids: ids}, function (result) {
+            if (result.success) {
+                layer.msg('删除成功', {icon: 1});
+                $(".layui-form-checked").not('.header').parents('tr').remove();
+            } else {
+                layer.msg("删除失败", {icon: 1});
+            }
         });
+
+    });
 }
 
 
@@ -215,5 +255,8 @@ function articleShow(title,url) {
     window.parent.location.href = "/";
 }
 </script>
+
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/search.js"></script>
 
 </html>

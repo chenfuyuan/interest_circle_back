@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="left-content" class="left-content" th:attr="data-cid=${circle.id}">
+    <div>
+        <div>
+            <div class="theme-color-container circle-info-card">
+                <header class="card-header">
+                    <div class="circle-bg"
+                         th:attr="style='background-image:url('+${circle.bgdPath}+')'"></div>
+                    <div class="circle-info">
+                        <div class="circle-avatar">
+                            <!--圈子头像图片-->
+                            <img th:src="@{${circle.avatarPath}}" alt="">
+                        </div>
+                        <!--圈子标题-->
+                        <span class="circle-name"><h1 th:text="${circle.name}">圈子名字</h1><!----></span></div>
+                </header>
+                <div class="card-content">
+                    <div class="circle-users">
+                        <!--                                圈子成员头像-->
+                        <div class="user-list clear-fix">
+                            <div class="user-avatar" th:each="avatarPath,stat:${avatarPaths}">
+                                <img th:src="@{${avatarPath}}" alt="">
+                            </div>
+
+                            <p class="users-count">
+                                <span class="dot"></span>
+                                <span th:text="${circle.userNum}">成员人数</span>个成员
+                            </p>·
+                        </div>
+                    </div>
+                    <div>
+                        <!--                                圈子简介-->
+                        <div class="circle-description" th:if="${circle.introduce}">
+                            <p th:text="${circle.introduce}" class="left-text">
+                                圈子简介</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</html>

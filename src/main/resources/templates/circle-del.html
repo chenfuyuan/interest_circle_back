@@ -36,19 +36,21 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-col-space5">
+                    <div class="layui-form layui-col-space5">
                         <div class="layui-input-inline layui-show-xs-block">
-                            <input class="layui-input" placeholder="开始日" name="start" id="start"></div>
+                            <input th:value="${start}" class="layui-input" placeholder="开始日" name="start" id="start"
+                                   autocomplete="off"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <input class="layui-input" placeholder="截止日" name="end" id="end"></div>
+                            <input th:value="${end}" class="layui-input" placeholder="截止日" name="end" id="end"
+                                   autocomplete="off"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <input type="text" name="username" placeholder="请输入圈子名" autocomplete="off"
-                                   class="layui-input"></div>
+                            <input th:value="${search}" type="text" name="search" placeholder="请输入用户名或id" autocomplete="off" class="layui-input" id="input-search"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                            <button data-table="circleDel" id="btn-search" class="layui-btn" lay-submit=""
+                                    lay-filter="sreach">
                                 <i class="layui-icon">&#xe615;</i></button>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <!--<div class="layui-card-header">-->
                     <!--<button class="layui-btn layui-btn-danger" onclick="delAll()">-->
@@ -74,7 +76,8 @@
                             <th>创建时间</th>
                             <th>更新时间</th>
                             <th>状态</th>
-                            <th>操作</th></tr>
+                            <!--<th>操作</th>-->
+                        </tr>
                         </thead>
                         <tbody>
                         <tr th:each="circle:${pageInfo.list}">
@@ -104,24 +107,24 @@
                                     已删除</span>
                             </td>
 
-                            <td class="td-manage">
-                                <a title="恢复" th:attr="onclick='member_del(this,'+${circle.id}+')'" href="javascript:;">
-                                    <i class="layui-icon">&#xe669;</i>
-                                </a>
-                            </td>
+                            <!--<td class="td-manage">-->
+                                <!--<a title="恢复" th:attr="onclick='member_del(this,'+${circle.id}+')'" href="javascript:;">-->
+                                    <!--<i class="layui-icon">&#xe669;</i>-->
+                                <!--</a>-->
+                            <!--</td>-->
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="layui-card-body ">
-                    <div class="page">
-                        <div>
-                            <a class="prev" href="">&lt;&lt;</a>
-                            <span class="current">1</span>
-                            <a class="num" href="">2</a>
-                            <a class="num" href="">3</a>
-                            <a class="num" href="">4</a>
-                            <a class="next" href="">&gt;&gt;</a></div>
+                <div class="layui-card-body" th:if="${paramUrl}==null">
+                    <div class="page"
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/circleDel')">
+                    </div>
+                </div>
+                <div class="layui-card-body" th:unless="${paramUrl}==null"
+                     th:with="url='/get/index/circleDel?'+${paramUrl}">
+                    <div class="page"
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},${url})">
                     </div>
                 </div>
             </div>
@@ -201,5 +204,6 @@ function delAll(argument) {
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
 }</script>
-
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/search.js"></script>
 </html>
