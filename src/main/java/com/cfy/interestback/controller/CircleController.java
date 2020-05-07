@@ -1,5 +1,6 @@
 package com.cfy.interestback.controller;
 
+import com.cfy.interestback.model.Article;
 import com.cfy.interestback.model.Circle;
 import com.cfy.interestback.service.CircleService;
 import com.cfy.interestback.vo.AjaxMessage;
@@ -26,6 +27,7 @@ public class CircleController {
     @Autowired
     private CircleService service;
 
+    private Integer num = 4;
 
     @Value("${com.cfy.interest.pageSize}")
     private Integer pageSize;
@@ -168,7 +170,21 @@ public class CircleController {
 
     @GetMapping("/get/circle/detail")
     public String getCircleDetail(Integer cid, Model model) {
+        //获取圈子信息
+        Circle circle = service.getCircleByCid(cid);
+        //获取圈子成员头像
 
+        List<String> memberAvatars = service.getMemberAvatars(cid,num);
+        //获取置顶栏
+        List<Article> stickys = service.getStickys(cid);
+
+        //传递属性
+        model.addAttribute("circle", circle);
+        log.info("当前圈子为："+circle);
+        model.addAttribute("avatarPaths", memberAvatars);
+        log.info("当前圈子成员的部分头像路径为：" + memberAvatars);
+        model.addAttribute("stickys", stickys);
+        log.info("当前圈子的置顶栏为"+stickys);
         return "circle-detail";
     }
 

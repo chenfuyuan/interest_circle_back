@@ -82,4 +82,8 @@ public interface CircleMapper extends BaseMapper<Circle> {
 
     @Update("update circle set article_num = article_num -1 where id = #{cid} and state !=0")
     int deleteArticle(Integer cid);
+
+    @Select("select * from circle where id = #{cid} and state != 0")
+    Circle getCircleByCid(Integer cid);
+
 }

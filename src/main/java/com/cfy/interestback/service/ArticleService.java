@@ -5,6 +5,7 @@ import com.cfy.interestback.model.ArticleComment;
 import com.cfy.interestback.model.Circle;
 import com.cfy.interestback.vo.AjaxMessage;
 import com.cfy.interestback.vo.DeleteReplyVo;
+import com.cfy.interestback.vo.GetArticleVo;
 
 import java.util.List;
 
@@ -28,4 +29,6 @@ public interface ArticleService extends CommonService<Article> {
     AjaxMessage delete(Integer aid, Integer cid) throws Exception;
 
     AjaxMessage reportCancel(Integer aid) throws Exception;
+
+    List<Article> getArticles(GetArticleVo getArticleVo);
 }

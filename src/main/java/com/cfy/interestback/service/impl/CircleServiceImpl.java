@@ -1,6 +1,8 @@
 package com.cfy.interestback.service.impl;
 
+import com.cfy.interestback.mapper.ArticleMapper;
 import com.cfy.interestback.mapper.CircleMapper;
+import com.cfy.interestback.model.Article;
 import com.cfy.interestback.model.Circle;
 import com.cfy.interestback.service.CircleService;
 import com.cfy.interestback.vo.AjaxMessage;
@@ -20,6 +22,8 @@ public class CircleServiceImpl implements CircleService {
     @Autowired
     private CircleMapper mapper;
 
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @Override
     public List<Circle> getList(SearchVo searchVo) {
@@ -68,5 +72,20 @@ public class CircleServiceImpl implements CircleService {
 
         log.info("删除了多少个帖子："+deleteArticleListSize);
         return integer;
+    }
+
+    @Override
+    public Circle getCircleByCid(Integer cid) {
+       return mapper.getCircleByCid(cid);
+    }
+
+    @Override
+    public List<String> getMemberAvatars(Integer cid, Integer num) {
+        return mapper.getCircleUserAvatarPath(cid);
+    }
+
+    @Override
+    public List<Article> getStickys(Integer cid) {
+        return articleMapper.getStickyByCid(cid);
     }
 }

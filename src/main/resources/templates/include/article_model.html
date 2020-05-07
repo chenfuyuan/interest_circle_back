@@ -6,7 +6,7 @@
 
 <body>
 <section>
-    <div th:fragment="main-content" class="main-content">
+    <div th:fragment="main-content" class="main-content" id="main-content" th:attr="data-cid=${circle.id}">
         <div class="content-block">
             <!--圈子搜索-->
             <div class="content-block search-block">
@@ -24,22 +24,8 @@
                 </div>
             </div>
 
-            <!--发帖栏-->
-            <div class="content-block edit-entry" id="edit-entry">
-                <div class="edit-entry-box"><p class="placeholder">
-                    有什么新消息分享给大家吧！</p>
-                    <div>
-                        <span class="more-icon-photo glyphicon glyphicon-picture"></span>
-                    </div> <!----></div>
-                <!--                    动态、精华选择 -->
-                <div class="content-block"></div>
-                <!--                    帖子内容    -->
-
-                <div class="content-block"></div>
-            </div>
-
             <!--置顶栏-->
-            <div class="topic-top" style="display: none">
+            <div class="topic-top" th:if="${!#lists.isEmpty(stickys)}">
                 <div class="header">
                     <span class="left">
                         <img src="/static/image/topic-top.svg" alt="">
@@ -50,10 +36,11 @@
                         <img src="/static/image/dayu.svg" alt="">
                     </span>
                 </div>
-                <!--<div class="topic-top-each unread">-->
-                <!--<div class="topic-read"></div>-->
-                <!--<div class="notice-content">asfasfaf</div> &lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt;-->
-                <!--</div>-->
+                <div class='topic-top-each unread' th:each="" data-aid='"+sticky.id+"'>
+                    <div class='topic-read'></div>
+                    <div class='notice-content'></div>
+                </div>
+
             </div>
 
             <!--全部-->
@@ -61,8 +48,8 @@
                 <div>
                     <div class="labelTopUtil">
                         <div>
-                            <span class="dynamic active normal">动态</span>
-                            <span class="essence">精华</span>
+                            <span class="dynamic active normal" id="normal">动态</span>
+                            <span class="essence" id="essence">精华</span>
                         </div>
                         <div class="right-side"><!---->
                             <span class="more-dropdown-box more-dropdown">

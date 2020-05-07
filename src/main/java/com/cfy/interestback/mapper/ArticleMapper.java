@@ -106,4 +106,26 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     @Update("update article set state = 0 where id = #{aid}")
     int deleteByAid(Integer aid);
+
+    @Select("select * from article where sticky = 1 and state = 1 and cid = #{cid}")
+    List<Article> getStickyByCid(Integer cid);
+
+
+
+    @Select("select * from article where state!=0 and cid=#{cid} ")
+    @ResultMap("articleMap")
+    public List<Article> findByCid(int cid);
+
+    @Select("select * from article where state!=0 and cid=#{cid} and (title like #{search} or content like #{search}) ")
+    @ResultMap("articleMap")
+    public List<Article> findSearchByCid(int cid,String search);
+
+    @Select("select * from article where state!=0 and type = 2 and cid=#{cid}  ")
+    @ResultMap("articleMap")
+    public List<Article> findEssenceByCid(int cid);
+
+    @Select("select * from article where state!=0 and type = 2 and cid=#{cid} and (title like #{search or content " +
+            "like #{search}}) ")
+    @ResultMap("articleMap")
+    List<Article> findEssenceSearchByCid(int cid, String search);
 }

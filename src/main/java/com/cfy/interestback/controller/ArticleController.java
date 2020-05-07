@@ -6,6 +6,7 @@ import com.cfy.interestback.model.Circle;
 import com.cfy.interestback.service.ArticleService;
 import com.cfy.interestback.vo.AjaxMessage;
 import com.cfy.interestback.vo.DeleteReplyVo;
+import com.cfy.interestback.vo.GetArticleVo;
 import com.cfy.interestback.vo.SearchVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -293,5 +294,36 @@ public class ArticleController {
             return new AjaxMessage(false, e.getMessage());
         }
         return ajaxMessage;
+    }
+
+    @PostMapping("/get/article/list")
+    @ResponseBody
+    public PageInfo<Article> getArticleList(@RequestBody GetArticleVo getArticleVo, HttpServletRequest request){
+        log.info("articleVo = " + getArticleVo);
+        //分页查询
+        Integer pageNum = getArticleVo.getPageNum();
+        //获取排序规则
+        String sort = getArticleVo.getSort();
+
+        PageHelper.startPage(pageNum, pageSize, sort + " desc");
+
+        try {
+
+            //根据cid查询对应帖子信息
+            List<Article> articles = service.getArticles(getArticleVo);
+            //封装分页
+            PageInfo<Article> pageInfo = new PageInfo<>(articles, pageSize);
+            log.info("pageInfo = " + pageInfo);
+            log.info("list = " + pageInfo.getList());
+            //获取总数据
+            long count = pageInfo.getTotal();
+            //判断查询是否大于总数据
+            if (count == 0 || (pageNum - 1) * pageSize >= count) {
+                return null;
+            }
+            return pageInfo;
+        } finally {
+            PageHelper.clearPage(); //清理 ThreadLocal 存储的分页参数,保证线程安全
+        }
     }
 }

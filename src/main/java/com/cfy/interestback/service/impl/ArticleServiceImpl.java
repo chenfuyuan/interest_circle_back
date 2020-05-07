@@ -7,6 +7,7 @@ import com.cfy.interestback.model.Circle;
 import com.cfy.interestback.service.ArticleService;
 import com.cfy.interestback.vo.AjaxMessage;
 import com.cfy.interestback.vo.DeleteReplyVo;
+import com.cfy.interestback.vo.GetArticleVo;
 import com.cfy.interestback.vo.SearchVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -190,5 +191,32 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return new AjaxMessage(true, "处理成功");
+    }
+
+    @Override
+    public List<Article> getArticles(GetArticleVo getArticleVo) {
+        String type = getArticleVo.getType();
+        int cid = getArticleVo.getCid();
+        String search = getArticleVo.getSearch();
+        List<Article> articles;
+        //设置帖子类型
+        if (type.equals("essence")) {
+            //设置查找帖子类型为精华贴
+            if (search.equals("")) {
+                articles = mapper.findEssenceByCid(cid);
+            } else {
+                search = "%" + search + "%";
+                articles = mapper.findEssenceSearchByCid(cid, search);
+            }
+        } else {
+            if (search.equals("")) {
+                articles = mapper.findByCid(cid);
+            } else {
+                search = "%" + search + "%";
+                articles = mapper.findSearchByCid(cid, search);
+            }
+        }
+
+        return articles;
     }
 }

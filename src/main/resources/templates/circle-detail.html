@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="htp://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-theme.min.css">
+
+    <script type="application/javascript" src="/static/js/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/articleDetail.css"/>
+    <link rel="stylesheet" href="/static/css/circleModel.css"/>
+    <link rel="stylesheet" href="/static/css/cssinit.css"/>
+    <link rel="stylesheet" href="/static/css/model.css">
+
 </head>
-<body>
-    这是圈子的详情界面
+<body style="background-color: #f5f5f5">
+    <section>
+        <div class="circle-content">
+            <div class="circle-home w-e-clear-fix">
+                <div th:replace="include/circle_model::left-content"></div>
+                <div th:replace="include/article_model::main-content"></div>
+            </div>
+        </div>
+
+    </section>
+<script type="application/javascript" src="/static/js/circleDetail.js"></script>
 </body>
 </html>
