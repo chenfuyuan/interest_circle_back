@@ -216,7 +216,6 @@ public class ArticleServiceImpl implements ArticleService {
                 articles = mapper.findSearchByCid(cid, search);
             }
         }
-
         return articles;
     }
 }

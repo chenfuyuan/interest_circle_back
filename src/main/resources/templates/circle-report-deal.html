@@ -46,7 +46,7 @@
                         <div class="layui-input-inline layui-show-xs-block">
                             <input th:value="${search}" type="text" name="search" placeholder="请输入用户名或id" autocomplete="off" class="layui-input" id="input-search"></div>
                         <div class="layui-input-inline layui-show-xs-block">
-                            <button data-table="circleReportList" id="btn-search" class="layui-btn" lay-submit=""
+                            <button data-table="circleReportDeal" id="btn-search" class="layui-btn" lay-submit=""
                                     lay-filter="sreach">
                                 <i class="layui-icon">&#xe615;</i></button>
                         </div>
@@ -84,11 +84,11 @@
                 </div>
                 <div class="layui-card-body" th:if="${paramUrl}==null">
                     <div class="page"
-                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/circleReportList')">
+                         th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},'/get/index/circleReportDeal')">
                     </div>
                 </div>
                 <div class="layui-card-body" th:unless="${paramUrl}==null"
-                     th:with="url='/get/index/circleReportList?'+${paramUrl}">
+                     th:with="url='/get/index/circleReportDeal?'+${paramUrl}">
                     <div class="page"
                          th:replace="pager::pager(${pageInfo.pageNum},${pageInfo.pages},${url})">
                     </div>

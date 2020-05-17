@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 
@@ -167,6 +165,12 @@ public class CircleController {
 
     }
 
+    @GetMapping("/circle/delete/{id}")
+    @ResponseBody
+    public AjaxMessage delete(@PathVariable("id")Integer cid){
+        Integer[] deleteList = {cid};
+        return deleteMore(deleteList);
+    }
 
     @GetMapping("/get/circle/detail")
     public String getCircleDetail(Integer cid, Model model) {
@@ -188,4 +192,17 @@ public class CircleController {
         return "circle-detail";
     }
 
+    @GetMapping("/circle/report/cancel/{id}")
+    @ResponseBody
+    public AjaxMessage cancelReport(@PathVariable("id") Integer id, HttpServletRequest request) {
+        AjaxMessage ajaxMessage = null;
+        try {
+            ajaxMessage = service.reportCancel(id);
+        } catch (Exception e) {
+            log.info("");
+            e.printStackTrace();
+            return new AjaxMessage(false, e.getMessage());
+        }
+        return ajaxMessage;
+    }
 }

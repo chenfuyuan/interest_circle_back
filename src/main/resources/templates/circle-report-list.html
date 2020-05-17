@@ -173,12 +173,15 @@ function member_stop(obj, id) {
 function member_del(obj, id) {
     layer.confirm('确认要删除吗？',
         function(index) {
-            //发异步删除数据
+        $.get("/circle/delete/"+id,function(re){
             $(obj).parents("tr").remove();
             layer.msg('已删除!', {
                 icon: 1,
                 time: 1000
             });
+        });
+        //发异步删除数据
+
         });
 }
 
@@ -212,6 +215,24 @@ function delAll(argument) {
     });
 }
 
+function report_no(obj,id) {
+    layer.confirm('确认要忽略吗？',
+        function(index) {
+            //发异步删除数据
+            $.get("/circle/report/cancel/" + id,function (re) {
+                if (re.success) {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已处理!', {
+                        icon: 1,
+                        time: 1000
+                    });
+                } else {
+                    layer.msg('处理失败');
+                }
+            });
+
+        });
+}
 
 
 function circleShow(url) {

@@ -86,4 +86,13 @@ public interface CircleMapper extends BaseMapper<Circle> {
     @Select("select * from circle where id = #{cid} and state != 0")
     Circle getCircleByCid(Integer cid);
 
+    @Update({
+            "<script>"
+                    + "update circle_report set state = 2 where state =1 and cid in "
+                    + "<foreach item = 'item' index = 'index' collection = 'cid' open='(' separator = ',' close=')'>"
+                    + "#{item}"
+                    +"</foreach>"
+                    +"</script>"
+    })
+    Integer deleteReportByCid(@Param("cid")Integer[] deleteList);
 }

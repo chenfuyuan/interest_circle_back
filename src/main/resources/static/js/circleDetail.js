@@ -271,6 +271,13 @@ $(function () {
         })
     }
 
+    $("#btn-article-saerch").click(function(){
+        var searchText = $("#input-aricle-search").val();
+        console.log("获取搜索信息 = " + searchText);
+        search = searchText;
+        $post_list.html("");
+        getArticleList();
+    });
 
     //入口
     var run = function () {

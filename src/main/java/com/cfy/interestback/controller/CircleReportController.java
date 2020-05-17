@@ -94,7 +94,7 @@ public class CircleReportController {
             PageInfo<CircleReport> pageInfo = new PageInfo<>(list, pageSize);
 
             model.addAttribute("pageInfo", pageInfo);
-
+            log.info("pages = " + pageInfo.getPages());
             log.info("pageSize = " + pageSize);
 
             String start = searchVo.getStart();
@@ -136,6 +136,7 @@ public class CircleReportController {
         }finally {
             PageHelper.clearPage();
         }
+
         return "circle-report-deal";
     }
 }

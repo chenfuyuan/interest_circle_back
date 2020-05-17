@@ -221,7 +221,6 @@
             if (ids.length == 0) {
                 layer.msg("未选择选出项");
             }
-
             $.post("/user/delete/more", {ids: ids}, function (result) {
                 if (result.success) {
                     layer.msg('删除成功', {icon: 1});

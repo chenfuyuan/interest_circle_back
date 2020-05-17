@@ -284,7 +284,7 @@ public class ArticleController {
 
     @GetMapping("/article/report/cancel/{id}")
     @ResponseBody
-    public AjaxMessage delete(@PathVariable("id") Integer aid, HttpServletRequest request) {
+    public AjaxMessage cancelReport(@PathVariable("id") Integer aid, HttpServletRequest request) {
         AjaxMessage ajaxMessage = null;
         try {
             ajaxMessage = service.reportCancel(aid);
