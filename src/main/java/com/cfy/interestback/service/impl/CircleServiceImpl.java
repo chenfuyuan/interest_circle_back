@@ -69,7 +69,7 @@ public class CircleServiceImpl implements CircleService {
     public Integer deleteMore(Integer[] deleteList) throws Exception {
         //更改圈子状态
         Integer integer = mapper.deleteMore(deleteList);
-
+        mapper.deleteCircleUserTable(deleteList);
         if (integer < 1) {
             throw new Exception("未删除完全");
         }

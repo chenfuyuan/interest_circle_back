@@ -95,4 +95,14 @@ public interface CircleMapper extends BaseMapper<Circle> {
                     +"</script>"
     })
     Integer deleteReportByCid(@Param("cid")Integer[] deleteList);
+
+    @Update({
+            "<script>"
+                    + "update circle_user set state = 0 where state !=0 and cid in "
+                    + "<foreach item = 'item' index = 'index' collection = 'id' open='(' separator = ',' close=')'>"
+                    + "#{item}"
+                    +"</foreach>"
+                    +"</script>"
+    })
+    void deleteCircleUserTable(@Param("id")Integer[] deleteList);
 }
